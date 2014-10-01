@@ -1,12 +1,18 @@
 {
-    "name": "vendor_name/package_name",
-    "description": "description_text",
-    "minimum-stability": "stable",
-    "license": "proprietary",
+    "name": "blackscorp/guestbook",
+    "description": "Clean Code example",
+    "license": "MIT",
     "authors": [
         {
-            "name": "author's name",
-            "email": "email@example.com"
+            "name": "Vitalij Mik",
+            "email": "admin@blackscorp.de"
         }
-    ]
+    ],
+    "autoload":{
+        "psr-4":{
+            "GuestBook\\":"src/",
+            "GuestBook\\Test\\":"tests/",
+            "GuestBook\\Mock\\":"mock/"
+        }
+    }
 }
