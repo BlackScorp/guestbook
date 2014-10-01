@@ -1,12 +1,14 @@
-<?php namespace GuestBook\Request;
+<?php namespace GuestBook\Entity;
 
-class CreateEntryRequest {
+class EntryEntity {
+    private $entryId = 0;
     private $authorName = '';
-    private $authorEmail ='';
+    private $authorEmail = '';
     private $content = '';
 
-    public function __construct($authorName, $authorEmail, $content)
+    public function __construct($entryId, $authorName, $authorEmail, $content)
     {
+        $this->entryId     = $entryId;
         $this->authorName  = $authorName;
         $this->authorEmail = $authorEmail;
         $this->content     = $content;
@@ -35,4 +37,14 @@ class CreateEntryRequest {
     {
         return $this->content;
     }
+
+    /**
+     * @return int
+     */
+    public function getEntryId()
+    {
+        return $this->entryId;
+    }
+
+
 } 
