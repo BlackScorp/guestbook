@@ -16,5 +16,8 @@ class MockCreateEntryValidator extends CreateEntryValidator{
         if(empty($this->content)){
             $this->appendError('Content is empty');
         }
+        if(!empty($this->authorEmail) && !filter_var($this->authorEmail, FILTER_VALIDATE_EMAIL)){
+            $this->appendError('Authors E-Mail is invalid');
+        }
     }
 } 

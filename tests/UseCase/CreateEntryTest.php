@@ -34,7 +34,11 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
     public function failedRequests()
     {
         return array(
-            'empty data'=> array('', '', '', array('Authors Name is empty', 'Authors E-Mail is empty', 'Content is empty'))
+            'empty data'=> array('', '', '', array('Authors Name is empty', 'Authors E-Mail is empty', 'Content is empty')),
+            'empty name'=> array('', 'test@foo.com', 'this is a test content', array('Authors Name is empty')),
+            'empty email'=> array('Test', '', 'this is a test content', array('Authors E-Mail is empty')),
+            'empty content'=> array('Test', 'test@foo.com', '', array('Content is empty')),
+            'invalid email'=> array('Test', 'test', 'this is a test content', array('Authors E-Mail is invalid')),
         );
     }
 
