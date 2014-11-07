@@ -9,5 +9,4 @@ class MockListEntriesResponse implements ListEntriesResponse{
     {
        $this->entries[]=$entry;
     }
-
 } 

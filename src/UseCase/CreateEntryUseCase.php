@@ -23,7 +23,6 @@ class CreateEntryUseCase {
         $this->applyValidatorData($request);
 
         if(!$this->createEntryValidator->isValid()){
-
             $response->setErrors($this->createEntryValidator->getErrors());
             return;
         }

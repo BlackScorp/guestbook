@@ -4,7 +4,6 @@ use GuestBook\Entity\EntryEntity;
 
 interface EntryRepository {
     public function getUniqueId();
-
     /**
      * @param $entryId
      * @param $authorName
@@ -14,6 +13,12 @@ interface EntryRepository {
      * @return EntryEntity
      */
     public function create($entryId,$authorName,$authorEmail,$content);
+
+    /**
+     * @param EntryEntity $entity
+     *
+     * @return void
+     */
     public function add(EntryEntity $entity);
 
     /**

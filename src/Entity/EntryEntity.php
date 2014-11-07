@@ -45,6 +45,4 @@ class EntryEntity {
     {
         return $this->entryId;
     }
-
-
 } 
