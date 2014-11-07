@@ -1,5 +1,7 @@
 <?php namespace GuestBook\Response;
 
-interface CreateEntryResponse {
-    public function failed();
+use GuestBook\Request\CreateEntryRequest;
+
+interface CreateEntryResponse extends  Response {
+    public function setRequestData(CreateEntryRequest $request);
 } 
