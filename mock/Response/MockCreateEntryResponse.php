@@ -10,13 +10,10 @@ class MockCreateEntryResponse implements CreateEntryResponse{
     public $authorEmail = '';
     public $content = '';
 
-
     public function setRequestData(CreateEntryRequest $request)
     {
         $this->authorEmail = $request->getAuthorEmail();
         $this->authorName = $request->getAuthorName();
         $this->content = $request->getContent();
     }
-
-
 } 

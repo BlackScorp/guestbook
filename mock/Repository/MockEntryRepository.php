@@ -31,5 +31,4 @@ class MockEntryRepository implements EntryRepository{
     {
         return $this->entries;
     }
-
 } 

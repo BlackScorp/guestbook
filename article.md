@@ -21,7 +21,10 @@ How can you develop a software which is independant of the framework and at same
 [Robert C Marin](http://en.wikipedia.org/wiki/Robert_Cecil_Martin) presented a solution "Clean Code Architecture"
 [![Clean Code Architecture](http://blog.8thlight.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
-The goals and idea behind it looks very nice but hard to understand in the first time there are many interpretations about it on the internet. I tryed to realize it in the easist way i could understand.
+The goals and idea behind it looks very nice but hard to understand in the first time there are many interpretations about it on the internet. In my oppinion this picture just explains the whole idea but not the details, however the details are better explained with following picture
+
+
+I tryed to realize it in the easist way i could understand.
 
 #Design Pattern
 First of all forget about all design pattern, the design pattern are realized by the framework, only view of them are used in the clean code architecture.
@@ -204,3 +207,188 @@ abstract class Validator implements ErrorInterface{
     abstract public function validate();
 }
 ```
+
+interfaces are nice to define what methods we expect, but need to create classes and fill the methods with logic, for the test purpose we going to implement mock classes
+
+```php
+//mock/Repository/MockEntryRepository.php
+namespace GuestBook\Mock\Repository;
+use GuestBook\Entity\EntryEntity;
+use GuestBook\Repository\EntryRepository;
+class MockEntryRepository implements EntryRepository{
+    private $entries = array();
+    public function getUniqueId()
+    {
+        $countEntries = count($this->entries);
+        return ++$countEntries;
+    }
+    public function create($entryId, $authorName, $authorEmail, $content)
+    {
+        return new EntryEntity($entryId,$authorName,$authorEmail,$content);
+    }
+    public function add(EntryEntity $entity)
+    {
+        $this->entries[$entity->getEntryId()] = $entity;
+    }
+} 
+//mock/Request/MockCreateEntryRequest.php
+namespace GuestBook\Mock\Request;
+use GuestBook\Request\CreateEntryRequest;
+class MockCreateEntryRequest implements CreateEntryRequest{
+    private $authorName = '';
+    private $authorEmail ='';
+    private $content = '';
+    public function __construct($authorName, $authorEmail, $content)
+    {
+        $this->authorName  = $authorName;
+        $this->authorEmail = $authorEmail;
+        $this->content     = $content;
+    }
+    public function getAuthorEmail()
+    {
+        return $this->authorEmail;
+    }
+    public function getAuthorName()
+    {
+        return $this->authorName;
+    }
+    public function getContent()
+    {
+        return $this->content;
+    }
+}
+//mock/Response/MockCreateEntryResponse.php
+namespace GuestBook\Mock\Response;
+use GuestBook\ErrorTrait;
+use GuestBook\Request\CreateEntryRequest;
+use GuestBook\Response\CreateEntryResponse;
+class MockCreateEntryResponse implements CreateEntryResponse{
+    use ErrorTrait;
+    public $authorName = '';
+    public $authorEmail = '';
+    public $content = '';
+    public function setRequestData(CreateEntryRequest $request)
+    {
+        $this->authorEmail = $request->getAuthorEmail();
+        $this->authorName = $request->getAuthorName();
+        $this->content = $request->getContent();
+    }
+} 
+//mock/Validator/MockCreateEntryValidator.php
+namespace GuestBook\Mock\Validator;
+use GuestBook\ErrorTrait;
+use GuestBook\Validator\CreateEntryValidator;
+class MockCreateEntryValidator extends CreateEntryValidator{
+    use ErrorTrait;
+    public function validate()
+    {
+        if(empty($this->authorName)){
+            $this->appendError('Authors Name is empty');
+        }
+        if(empty($this->authorEmail)){
+            $this->appendError('Authors E-Mail is empty');
+        }
+        if(empty($this->content)){
+            $this->appendError('Content is empty');
+        }
+        if(!empty($this->authorEmail) && !filter_var($this->authorEmail, FILTER_VALIDATE_EMAIL)){
+            $this->appendError('Authors E-Mail is invalid');
+        }
+    }
+} 
+```
+
+to prevent copy and past of the message handling in my validator and response i created a trait
+
+```php
+//src/ErrorTrait.php
+namespace GuestBook;
+trait ErrorTrait{
+    private $errors = array();
+    public function hasErrors(){
+        return count($this->errors) > 0;
+    }
+    public function setErrors(array $errors){
+        $this->errors = $errors;
+    }
+    public function getErrors(){
+        return $this->errors;
+    }
+    public function appendError($message){
+        $this->errors[]=$message;
+    }
+} 
+```
+
+now lets finish our tests and see how our usecase is working
+```php
+//tests/UseCase/CreateEntryTest.php
+namespace GuestBook\Test\UseCase;
+use GuestBook\Mock\Repository\MockEntryRepository;
+use GuestBook\Mock\Request\MockCreateEntryRequest;
+use GuestBook\Mock\Response\MockCreateEntryResponse;
+use GuestBook\Mock\Validator\MockCreateEntryValidator;
+use GuestBook\UseCase\CreateEntryUseCase;
+class CreateEntryTest extends \PHPUnit_Framework_TestCase
+{
+    private $entryRepository;
+    private $createEntryValidator;
+    public function setUp()
+    {
+        $this->entryRepository      = new MockEntryRepository();
+        $this->createEntryValidator = new MockCreateEntryValidator();
+    }
+    /**
+     * @param $authorName
+     * @param $authorEmail
+     * @param $content
+     *
+     * @return MockCreateEntryResponse
+     */
+    private function executeUseCase($authorName, $authorEmail, $content){
+        $request  = new MockCreateEntryRequest($authorName, $authorEmail, $content);
+        $response = new MockCreateEntryResponse();
+        $useCase  = new CreateEntryUseCase($this->entryRepository, $this->createEntryValidator);
+        $useCase->process($request, $response);
+        return $response;
+    }
+    public function failedRequests()
+    {
+        return array(
+            'empty data'=> array('', '', '', array('Authors Name is empty', 'Authors E-Mail is empty', 'Content is empty')),
+            'empty name'=> array('', 'test@foo.com', 'this is a test content', array('Authors Name is empty')),
+            'empty email'=> array('Test', '', 'this is a test content', array('Authors E-Mail is empty')),
+            'empty content'=> array('Test', 'test@foo.com', '', array('Content is empty')),
+            'invalid email'=> array('Test', 'test', 'this is a test content', array('Authors E-Mail is invalid')),
+        );
+    }
+    public function testCanCreateEntry()
+    {
+        $response = $this->executeUseCase('Test', 'Test@foo.com', 'Hello World');
+        $this->assertFalse($response->hasErrors());
+    }
+    /**
+     * @param $authorName
+     * @param $authorEmail
+     * @param $content
+     * @param $expectedErrors
+     *
+     * @dataProvider failedRequests
+     */
+    public function testFailCreateEntry($authorName, $authorEmail, $content, $expectedErrors)
+    {
+        $response = $this->executeUseCase($authorName,$authorEmail,$content);
+        $this->assertTrue($response->hasErrors());
+        $this->assertEquals($expectedErrors, $response->getErrors());
+    }
+} 
+```
+
+the same thing we do with our second feature "List Entries".
+
+You can find the code on [github](https://github.com/BlackScorp/guestbook)
+
+##conclusion
+Youre able to create testable code independant of other frameworks, the web, the database you can easy create dummy data and test if your code produces the expected data.
+
+in the next part iam going to create the implementation for a framework, currently i dont know which framework i should use, iam also only familar with symfony2. it would be nice to see some suggestions for a framework implementation in the comments

@@ -1,7 +1,6 @@
 <?php
 namespace GuestBook;
 
-
 trait ErrorTrait{
     private $errors = array();
     public function hasErrors(){

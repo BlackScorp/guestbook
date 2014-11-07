@@ -59,7 +59,7 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
     public function testFailCreateEntry($authorName, $authorEmail, $content, $expectedErrors)
     {
         $response = $this->executeUseCase($authorName,$authorEmail,$content);
-        $this->assertTrue($response->hasErrors(),"UseCase has no error");
+        $this->assertTrue($response->hasErrors());
         $this->assertEquals($expectedErrors, $response->getErrors());
     }
 } 
