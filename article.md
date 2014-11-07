@@ -28,7 +28,7 @@ The goals and idea behind it looks very nice but hard to understand in the first
 I tryed to realize it in the easist way i could understand.
 
 #Design Pattern
-First of all forget about all design pattern, the design pattern are realized by the framework, only view of them are used in the clean code architecture.
+First of all forget about all design pattern, the design pattern are realized by the framework, only few of them are used in the clean code architecture.
 
 In all my projects i realized with the clean code architecture i used mostly [Command Design Pattern](http://en.wikipedia.org/wiki/Command_pattern) and [Repository Design Pattern](http://www.sitepoint.com/repository-design-pattern-demystified/)
 
