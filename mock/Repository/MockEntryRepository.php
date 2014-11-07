@@ -10,7 +10,8 @@ class MockEntryRepository implements EntryRepository{
     private $entries = array();
     public function getUniqueId()
     {
-        return 1;
+        $countEntries = count($this->entries);
+        return ++$countEntries;
     }
 
     public function create($entryId, $authorName, $authorEmail, $content)
