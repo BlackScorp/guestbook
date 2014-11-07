@@ -15,4 +15,9 @@ interface EntryRepository {
      */
     public function create($entryId,$authorName,$authorEmail,$content);
     public function add(EntryEntity $entity);
+
+    /**
+     * @return EntryEntity[]
+     */
+    public function findAll();
 } 

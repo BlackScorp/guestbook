@@ -23,4 +23,12 @@ class MockEntryRepository implements EntryRepository{
         $this->entries[$entity->getEntryId()] = $entity;
     }
 
+    /**
+     * @return EntryEntity[]
+     */
+    public function findAll()
+    {
+        return $this->entries;
+    }
+
 } 

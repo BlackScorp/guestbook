@@ -1,5 +1,7 @@
 <?php namespace GuestBook\Response;
 
-interface ListEntriesResponse {
+use GuestBook\View\EntryView;
 
+interface ListEntriesResponse {
+    public function addEntry(EntryView $entry);
 } 
