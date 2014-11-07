@@ -23,6 +23,7 @@ How can you develop a software which is independant of the framework and at same
 
 The goals and idea behind it looks very nice but hard to understand in the first time there are many interpretations about it on the internet. In my oppinion this picture just explains the whole idea but not the details, however the details are better explained with following picture
 
+![](https://raw.githubusercontent.com/BlackScorp/guestbook/master/cleancode.png)
 
 I tryed to realize it in the easist way i could understand.
 
