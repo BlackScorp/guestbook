@@ -1,5 +1,5 @@
 <?php namespace GuestBook\Request;
 
-class ListEntriesRequest {
+interface ListEntriesRequest {
 
 } 

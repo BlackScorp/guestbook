@@ -1,11 +1,11 @@
 <?php namespace GuestBook\Mock\Response;
 
+use GuestBook\ErrorTrait;
 use GuestBook\Request\CreateEntryRequest;
 use GuestBook\Response\CreateEntryResponse;
 
-
 class MockCreateEntryResponse implements CreateEntryResponse{
-
+    use ErrorTrait;
     public $authorName = '';
     public $authorEmail = '';
     public $content = '';
@@ -18,19 +18,5 @@ class MockCreateEntryResponse implements CreateEntryResponse{
         $this->content = $request->getContent();
     }
 
-    private $failed = false;
-    private $errors = array();
 
-    public function failed(){
-        return $this->failed;
-    }
-    public function errors(){
-        return $this->errors;
-    }
-    public function fail(){
-        $this->failed = true;
-    }
-    public function setErrors(array $errors){
-        $this->errors = $errors;
-    }
 } 

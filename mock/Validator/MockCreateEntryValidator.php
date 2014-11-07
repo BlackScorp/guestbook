@@ -1,20 +1,20 @@
 <?php namespace GuestBook\Mock\Validator;
 
+use GuestBook\ErrorTrait;
 use GuestBook\Validator\CreateEntryValidator;
 
 class MockCreateEntryValidator extends CreateEntryValidator{
-
+    use ErrorTrait;
     public function validate()
     {
         if(empty($this->authorName)){
-            $this->addErrorMessage('Authors Name is empty');
+            $this->appendError('Authors Name is empty');
         }
         if(empty($this->authorEmail)){
-            $this->addErrorMessage('Authors E-Mail is empty');
+            $this->appendError('Authors E-Mail is empty');
         }
         if(empty($this->content)){
-            $this->addErrorMessage('Content is empty');
+            $this->appendError('Content is empty');
         }
     }
-
 } 

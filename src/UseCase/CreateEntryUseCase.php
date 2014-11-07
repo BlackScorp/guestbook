@@ -12,14 +12,18 @@ class CreateEntryUseCase {
         $this->entryRepository = $entryRepository;
         $this->createEntryValidator = $createEntryValidator;
     }
-
+    private function applyValidatorData(CreateEntryRequest $request){
+        $this->createEntryValidator->authorEmail = $request->getAuthorEmail();
+        $this->createEntryValidator->authorName = $request->getAuthorName();
+        $this->createEntryValidator->content = $request->getContent();
+    }
     public function process(CreateEntryRequest $request,CreateEntryResponse $response){
 
         $response->setRequestData($request);
-        $this->createEntryValidator->setRequestData($request);
+        $this->applyValidatorData($request);
 
         if(!$this->createEntryValidator->isValid()){
-            $response->fail();
+
             $response->setErrors($this->createEntryValidator->getErrors());
             return;
         }

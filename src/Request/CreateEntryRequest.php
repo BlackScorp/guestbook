@@ -1,38 +1,19 @@
 <?php namespace GuestBook\Request;
 
-class CreateEntryRequest {
-    private $authorName = '';
-    private $authorEmail ='';
-    private $content = '';
-
-    public function __construct($authorName, $authorEmail, $content)
-    {
-        $this->authorName  = $authorName;
-        $this->authorEmail = $authorEmail;
-        $this->content     = $content;
-    }
+interface CreateEntryRequest {
 
     /**
      * @return string
      */
-    public function getAuthorEmail()
-    {
-        return $this->authorEmail;
-    }
+    public function getAuthorEmail();
 
     /**
      * @return string
      */
-    public function getAuthorName()
-    {
-        return $this->authorName;
-    }
+    public function getAuthorName();
 
     /**
      * @return string
      */
-    public function getContent()
-    {
-        return $this->content;
-    }
+    public function getContent();
 } 
