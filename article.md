@@ -1,64 +1,62 @@
-#once upon a time...
+#Once upon a time...
 
-there was a developer, he had to realize a nice clean greenfield project with any framework he like.
+...there was a young developer who was tasked with a nice, clean greenfield project using any framework he liked.
 
-He had no idea which PHP Frameworks were outside there and after a small research he decide to use Kohana 3.2 because at this time this was the only one framework which the developer could understand and use.
+He had no idea which PHP frameworks were out there, but after a bit of research he decided to use Kohana 3.2 because at the time, it was the only framework which the developer could easily understand and use.
 
-after 9 months of developing the project was born and launched. the developer realized that a new version of the Kohana framework was released, it was a minor release.
+After 9 months of developing, the project was born and launched. However, the developer realized that there was a new version of the Kohana framework - it was a minor release.
 
-one small simple update to Kohana 3.3 and the entire project was broken, he reverted the framework update.
+With just one small simple update to Kohana 3.3 the entire project was broken... so he reverted back to before the framework update.
 
-after doing view more researches the developer realized that this problems have every framework, there are tons of blog posts, articles etc outside on the internet about upgraiding current code base of framework x to newer version(eg Zend 1 to Zend 2, Symfony 1 to Symfony 2 and so on)
+After some more research, the developer realized that this problem is endemic to every framework - there are tons of blog posts, articles, etc. all over the internet about upgrading the current code base of framework X to the newer version (e.g. Zend 1 to Zend 2, Symfony 1 to Symfony 2 and so on...).
 
-Conclusion of this, frameworks are nice and you can speed up initial development, but on the other hand you either stuck to a version or to the framework and have to maintain this project while other frameworks offer much cooler features in the meantime.
-
-Also many companies using their custom in house created framework(for what ever reason)
+The moral of the story? Frameworks are nice - you can speed up initial development - but you may be stuck to a particular version or framework and have to maintain a particular project while meanwhile other frameworks start offering much cooler features. Additionally, many companies are using their own in-house framework (for various reasons).
 
 #Clean Code Architecture
 
-How can you develop a software which is independant of the framework and at same time using features from a framework?
+How can you develop software which is independent of the framework and at the same time uses features from that framework?
 
-[Robert C Marin](http://en.wikipedia.org/wiki/Robert_Cecil_Martin) presented a solution "Clean Code Architecture"
+[Robert C Marin](http://en.wikipedia.org/wiki/Robert_Cecil_Martin) presented a solution - "Clean Code Architecture":
 [![Clean Code Architecture](http://blog.8thlight.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg)](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
-The goals and idea behind it looks very nice but hard to understand in the first time there are many interpretations about it on the internet. In my oppinion this picture just explains the whole idea but not the details, however the details are better explained with following picture
+The goals and ideas behind it look very nice but it's a bit hard to understand at first look, and there are many interpretations around the internet. In my opinion, this picture just explains the general concept but not the details - which I believe are better explained with following picture:
 
 ![](https://raw.githubusercontent.com/BlackScorp/guestbook/master/cleancode.png)
 
-I tryed to realize it in the easist way i could understand.
+I have tried to formulate it as I have understood it in the simplest way.
 
 #Design Pattern
-First of all forget about all design pattern, the design pattern are realized by the framework, only few of them are used in the clean code architecture.
+First of all, forget all about the design pattern - the design pattern is realized by the framework - only few of them are used in the clean code architecture.
 
-In all my projects i realized with the clean code architecture i used mostly [Command Design Pattern](http://en.wikipedia.org/wiki/Command_pattern) and [Repository Design Pattern](http://www.sitepoint.com/repository-design-pattern-demystified/)
+In all of my projects created with the clean code architecture, I mostly used [Command Design Pattern](http://en.wikipedia.org/wiki/Command_pattern) and [Repository Design Pattern](http://www.sitepoint.com/repository-design-pattern-demystified/).
 
 ##Repository Design Pattern
 
-a small note, many developers argued against it, because they never had to switch the database and the realization of this pattern would just take more time.
+A small note: many developers have argued against it because they've never had to switch databases and the implementation of this pattern would just take more time.
 
-yes they are right, it is rarely that you have to change the database, however, a Repository is a container of data(or Datasource), which means, it could be also the Filesystem, an API even LDAP is a repository. While i had not to switch the Databases in my Projects still i had to add additional resources for data(Login via LDAP and/or Facebook API), display Profilepictures from Filesystem or gravatar API and so on.
+Yes, they are right in a way - it is rare that you have to change the database; however, a repository is a container of data (or data source), which means that it could also be the file system, an API... even LDAP is a repository. While I didn't have to switch the databases in my projects, I still had to add additional resources for the data (login via LDAP and/or Facebook API), display profile pictures from file system or Gravatar API and so on.
 
-Just want to say, Database is NOT the one and only datasource for an application
+I'd also like to add - the database is NOT the one and only DataSource for an application.
 
 #PHP
 
-So how to realized Clean Code Architecture in PHP? There are view small Rules.
+So, how do you realize Clean Code Architecture in PHP? There are a few small rules.
 
-1. Every action on your website is realized by a Command Pattern(even simple CRUD action, you never know if you have to add additional logic later)
+1. Every action on your website is realized by a Command Pattern (even simple CRUD actions -  you never know if you will need to add additional logic later)
 2. Every action has its own Request and Response class
-3. All dependencies are injected and contains an interface, dont inject concrete classes
+3. All dependencies are injected and contain an interface - don't inject concrete classes
 
 
-Personally i changed some definitions in my code to make it more understandable for developers.
+Personally, I've changed some definitions in my code to make it more understandable for developers.
 
 #Example
 
-Lets start with a small example. Lets say we have to create a guestbook we would have 2 Features
+Let's start with a small example. Say we have to create a guestbook - we would have two features:
 
 1. Create new entry
 2. List entries
 
-Lets begin with the feature Create new Entry. Our Test Method:
+Let's begin with the feature 'Create new entry'. Our test method is as follows:
 
 ```php
 <?php
@@ -79,8 +77,9 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
 }
 ```
 
-if we run the tests it will fail of course, non of the classes exists, so lets create them.
-first we create the use case 
+If we run the test - it will fail, of course. None of the classes exist, so let's create them.
+
+First, we create the UseCase.
 
 ```php
 <?php
@@ -91,7 +90,7 @@ class CreateEntryUseCase{
 	}
 }
 ```
-then we create the request/response interfaces
+Then, we create the Request/Response interfaces.
 
 ```php
 <?php
@@ -103,7 +102,7 @@ namespace GuestBook\Response;
 interface CreateEntryResponse{}
 ```
 
-next we create interfaces for our dependencies, since we need to store data , we require an EntryRepository also we want to store valid data only so we need a CreateEntryValidator
+Next, we'll create interfaces for our dependencies - since we need to store data, we'll need an EntryRepository. Also, we want to store only valid data, so we need a CreateEntryValidator.
 
 ```php
 <?php
@@ -112,7 +111,7 @@ namespace GuestBook\Repository;
 interface EntryRepository{}
 ```
 
-the validator we are going to create later, now lets add typehints to our usecase and shape our logic code
+We'll create the validator later. For now, let's add type hints to our UseCase and shape our logic code.
 
 ```php
 namespace GuestBook\UseCase;
@@ -152,20 +151,21 @@ class CreateEntryUseCase {
 } 
 ```
 
-so the process method is the place with our magic happends, first we copy the request data to the response data, its usefull to display old input entries in the form.
-next we set the request data to our validator,the createEntryValidator is just a data structure, we dont need private methods at this place.
+So the process method is where the magic happens. First, we copy the request data to the response data - it’s useful to display old input entries in the form.
+Next, we set the request data to our validator; the createEntryValidator is just a data structure, we don’t need private methods here.
 
-then we just check, if the validator is not valid, set the errors from validator to the response and stop execute, i rather perfer to negate the logic and stop the execution of the code than an if / else statement.
+Then we just check - if the validator is not valid, we set the errors from validator to the response and stop execution. I prefer to negate the logic and stop the execution of the code to using an if/else statement.
 
-if the input is valid we going to create the entry object with the help of our repository. note that the auto_increment is a mysql feature, since the repository is not a specific datasource we have to assume that auto_increment not exists.
+If the input is valid, we'll create the entry object with the help of our repository. Note that the auto_increment is a MySQL feature. Since the repository is not a specific datasource, we have to assume that auto_increment does not exist.
 
-lets say we would store our entries in MongoDB, so the getUniqueId method would return a new MongoID.
+Let's say we want to store our entries in MongoDB so that the getUniqueId method would return a new MongoID.
 
-after creating our entity we put them into our repository
+After creating our entity, we put them into our repository
 
-thats the complete logic, validate input -> create object based on input -> add the object to the repository
+That's the complete logic: validate input -> create an object based on input -> add the object to the repository.
 
-now we know what we expect from our classes so we can add the methods to our interfaces, i also added an errorinterface which helps me to handle error messages
+Now we know what we expect from our classes, so we can add the methods to our interfaces. I also added an ErrorInterface which helps me handle error messages.
+
 
 ```php
 <?php
@@ -209,7 +209,7 @@ abstract class Validator implements ErrorInterface{
 }
 ```
 
-interfaces are nice to define what methods we expect, but need to create classes and fill the methods with logic, for the test purpose we going to implement mock classes
+Interfaces are nice to define what methods we expect, but we need to create classes and fill the methods with logic. So, for test purposes, we will implement mock classes.
 
 ```php
 //mock/Repository/MockEntryRepository.php
@@ -299,7 +299,7 @@ class MockCreateEntryValidator extends CreateEntryValidator{
 } 
 ```
 
-to prevent copy and past of the message handling in my validator and response i created a trait
+To prevent the copy and pasting of the message handling in my validator and response, we create a trait.
 
 ```php
 //src/ErrorTrait.php
@@ -321,7 +321,8 @@ trait ErrorTrait{
 } 
 ```
 
-now lets finish our tests and see how our usecase is working
+Now let's finish our test and see how our UseCase is working.
+
 ```php
 //tests/UseCase/CreateEntryTest.php
 namespace GuestBook\Test\UseCase;
@@ -385,11 +386,13 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
 } 
 ```
 
-the same thing we do with our second feature "List Entries".
+We can also do the same thing with our second feature "List Entries".
 
-You can find the code on [github](https://github.com/BlackScorp/guestbook)
+You can find the code at [github](https://github.com/BlackScorp/guestbook)
 
 ##conclusion
-Youre able to create testable code independant of other frameworks, the web, the database you can easy create dummy data and test if your code produces the expected data.
+You're now able to create testable code independent of other frameworks, the web, and the database. You can easily create dummy data and test if your code produces the expected data**Do you mean "output"?**.
 
-in the next part iam going to create the implementation for a framework, currently i dont know which framework i should use, iam also only familar with symfony2. it would be nice to see some suggestions for a framework implementation in the comments
+In the next part, I am going to show the implementation of a framework, though currently I don't know which framework I should use as I'm only familiar with symfony2. It would be great to see some suggestions for framework implementation in the comments**Do you mean "suggestions for which framework implementation to do"?**. Thanks!
+
+Edited by [Seth Pyenson](https://www.linkedin.com/pub/seth-pyenson/9/704/15a)
