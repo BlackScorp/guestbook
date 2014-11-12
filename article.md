@@ -347,8 +347,7 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
      *
      * @return MockCreateEntryResponse
      */
-    private fun
-ction executeUseCase($authorName, $authorEmail, $content){
+    private function executeUseCase($authorName, $authorEmail, $content){
         $request  = new MockCreateEntryRequest($authorName, $authorEmail, $content);
         $response = new MockCreateEntryResponse();
         $useCase  = new CreateEntryUseCase($this->entryRepository, $this->createEntryValidator);
