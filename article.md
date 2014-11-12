@@ -6,9 +6,9 @@ He had no idea which PHP frameworks were out there, but after a bit of research 
 
 After 9 months of developing, the project was born and launched. However, the developer realized that there was a new version of the Kohana framework - it was a minor release.
 
-With just one small simple update to Kohana 3.3 the entire project was broken... so he reverted back to before the framework update.
+With just one small, simple update to Kohana 3.3 the entire project was broken... so he reverted back to before the framework update.
 
-After some more research, the developer realized that this problem is endemic to every framework - there are tons of blog posts, articles, etc. all over the internet about upgrading the current code base of framework X to the newer version (e.g. Zend 1 to Zend 2, Symfony 1 to Symfony 2 and so on...).
+After some more research, the developer realized that this problem is endemic to every framework - there are tons of blog posts, articles, etc. all over the internet about upgrading the current code base of framework X to the newer version (e.g. Zend to Zend 2, Symfony to Symfony2 and so on...).
 
 The moral of the story? Frameworks are nice - you can speed up initial development - but you may be stuck to a particular version or framework and have to maintain a particular project while meanwhile other frameworks start offering much cooler features. Additionally, many companies are using their own in-house framework (for various reasons).
 
@@ -160,7 +160,7 @@ If the input is valid, we'll create the entry object with the help of our reposi
 
 Let's say we want to store our entries in MongoDB so that the getUniqueId method would return a new MongoID.
 
-After creating our entity, we put them into our repository
+After creating our entities, we put them into our repository
 
 That's the complete logic: validate input -> create an object based on input -> add the object to the repository.
 
@@ -347,7 +347,8 @@ class CreateEntryTest extends \PHPUnit_Framework_TestCase
      *
      * @return MockCreateEntryResponse
      */
-    private function executeUseCase($authorName, $authorEmail, $content){
+    private fun
+ction executeUseCase($authorName, $authorEmail, $content){
         $request  = new MockCreateEntryRequest($authorName, $authorEmail, $content);
         $response = new MockCreateEntryResponse();
         $useCase  = new CreateEntryUseCase($this->entryRepository, $this->createEntryValidator);
@@ -391,8 +392,8 @@ We can also do the same thing with our second feature "List Entries".
 You can find the code at [github](https://github.com/BlackScorp/guestbook)
 
 ##conclusion
-You're now able to create testable code independent of other frameworks, the web, and the database. You can easily create dummy data and test if your code produces the expected data**Do you mean "output"?**.
+You're now able to create testable code that is independent of other frameworks, the web, and the database. You can easily create dummy data and test if the response object contains the proposed values.
 
-In the next part, I am going to show the implementation of a framework, though currently I don't know which framework I should use as I'm only familiar with symfony2. It would be great to see some suggestions for framework implementation in the comments**Do you mean "suggestions for which framework implementation to do"?**. Thanks!
+In the next part, I am going to show the implementation of a framework, though currently I don't know which framework I should use as I'm only familiar with Symfony2. It would be great to see some suggestions for framework implementation in the comments. Let me know what you think! Thanks!
 
-Edited by [Seth Pyenson](https://www.linkedin.com/pub/seth-pyenson/9/704/15a)
+Edited by [Seth Pyenson](http://www.linkedin.com/pub/seth-pyenson/9/704/15a)
