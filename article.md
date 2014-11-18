@@ -29,7 +29,7 @@ I'd also like to add - the database is NOT the one and only DataSource for an ap
 So, how do you realize Clean Code Architecture in PHP? There are a few small rules.
 
 1. Every action on your website is realized by a Command Pattern (even simple CRUD actions -  you never know if you will need to add additional logic later)
-2. Every action has its own Request and Response class
+2. Every action has its own Request and Response interface and of course the concrete implementations
 3. All dependencies are injected and contain an interface - don't inject concrete classes
 
 
