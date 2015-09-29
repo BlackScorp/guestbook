@@ -1,10 +1,4 @@
 <?php
-namespace GuestBook\View;
+namespace BlackScorp\GuestBook\View;
 
-
-class EntryView {
-    public  $authorName = '';
-    public $authorEmail = '';
-    public $content = '';
-
-} 
+abstract class EntryView {}

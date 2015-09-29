@@ -1,18 +1,22 @@
 {
-    "name": "blackscorp/guestbook",
-    "description": "Clean Code example",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Vitalij Mik",
-            "email": "admin@blackscorp.de"
-        }
-    ],
-    "autoload":{
-        "psr-4":{
-            "GuestBook\\":"src/",
-            "GuestBook\\Test\\":"tests/",
-            "GuestBook\\Mock\\":"mock/"
-        }
+  "name": "BlackScorp/GuestBook",
+  "description": "Clean Code example in PHP",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vitalij Mik",
+      "email": "vitalij@blackscorp.de"
     }
+  ],
+  "autoload":{
+    "psr-4":{
+      "BlackScorp\\GuestBook\\":"src/"
+    }
+  },
+  "autoload-dev":{
+    "psr-4":{
+      "BlackScorp\\GuestBook\\Fake\\":"fake/"
+    }
+  }
 }
