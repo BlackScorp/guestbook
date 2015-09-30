@@ -11,13 +11,22 @@ use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
 
 class ListEntriesTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @var FakeEntryViewFactory
+     */
+    private $entryViewFactory;
+
+    public function setUp()
+    {
+        $this->entryViewFactory = new FakeEntryViewFactory();
+    }
 
     public function testCanSeeEntries()
     {
         $entities = [];
         $entities[] = new EntryEntity();
         $request = new FakeViewEntriesRequest(5);
-        $response = $this->processUseCase($request,$entities);
+        $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
     }
 
@@ -25,48 +34,52 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     {
         $entities = [];
         $request = new FakeViewEntriesRequest(5);
-        $response = $this->processUseCase($request,$entities);
+        $response = $this->processUseCase($request, $entities);
         $this->assertEmpty($response->entries);
     }
-    public function testCanSeeFiveEntries(){
+
+    public function testCanSeeFiveEntries()
+    {
         $entities = [];
-        for($i = 0;$i<10;$i++){
+        for ($i = 0; $i < 10; $i++) {
             $entities[] = new EntryEntity();
         }
         $request = new FakeViewEntriesRequest(5);
-        $response = $this->processUseCase($request,$entities);
+        $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
-        $this->assertSame(5,count($response->entries));
+        $this->assertSame(5, count($response->entries));
     }
-    public function testCanSeeFiveEntriesOnSecondPage(){
+
+    public function testCanSeeFiveEntriesOnSecondPage()
+    {
         $entities = [];
         $expectedEntries = [];
-        $entryViewFactory = new FakeEntryViewFactory();
-        for($i = 0;$i<10;$i++){
+
+        for ($i = 0; $i < 10; $i++) {
             $entryEntity = new EntryEntity();
-            if($i >= 5){
-                $expectedEntries[]=$entryViewFactory->create($entryEntity);
+            if ($i >= 5) {
+                $expectedEntries[] = $this->entryViewFactory->create($entryEntity);
             }
-            $entities[] =$entryEntity;
+            $entities[] = $entryEntity;
         }
         $request = new FakeViewEntriesRequest(5);
         $request->setPage(2);
-        $response = $this->processUseCase($request,$entities);
+        $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
-        $this->assertSame(5,count($response->entries));
-        $this->assertEquals($expectedEntries,$response->entries);
+        $this->assertSame(5, count($response->entries));
+        $this->assertEquals($expectedEntries, $response->entries);
     }
+
     /**
      * @param $entities
      * @param $request
      * @return FakeViewEntriesResponse
      */
-    private function processUseCase($request,$entities)
+    private function processUseCase($request, $entities)
     {
         $entryRepository = new FakeEntryRepository($entities);
-        $entryViewFactory = new FakeEntryViewFactory();
         $response = new FakeViewEntriesResponse();
-        $useCase = new ViewEntriesUseCase($entryRepository, $entryViewFactory);
+        $useCase = new ViewEntriesUseCase($entryRepository, $this->entryViewFactory);
         $useCase->process($request, $response);
         return $response;
     }
