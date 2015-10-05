@@ -14,7 +14,10 @@ class FakeEntryViewFactory implements EntryViewFactory{
      */
     public function create(EntryEntity $entity)
     {
+
         $view = new FakeEntryView();
+        $view->author = $entity->getAuthor();
+        $view->text = $entity->getText();
         return $view;
     }
 }
