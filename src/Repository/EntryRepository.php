@@ -2,5 +2,5 @@
 namespace BlackScorp\GuestBook\Repository;
 
 interface EntryRepository {
-    public function findAll($offset,$limit);
+    public function findAllPaginated($offset, $limit);
 }

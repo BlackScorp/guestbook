@@ -17,7 +17,7 @@ class ViewEntriesUseCase
     }
     public function process(ViewEntriesRequest $request,ViewEntriesResponse $response){
 
-        $entries = $this->entryRepository->findAll($request->getOffset(),$request->getLimit());
+        $entries = $this->entryRepository->findAllPaginated($request->getOffset(),$request->getLimit());
 
         if(!$entries){
             return;

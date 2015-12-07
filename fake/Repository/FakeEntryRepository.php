@@ -12,7 +12,7 @@ class FakeEntryRepository implements EntryRepository{
         $this->entries = $entries;
     }
 
-    public function findAll($offset,$limit)
+    public function findAllPaginated($offset, $limit)
     {
 
         return array_splice($this->entries,$offset,$limit);
