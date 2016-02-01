@@ -6,7 +6,6 @@ use BlackScorp\GuestBook\Fake\Repository\FakeEntryRepository;
 use BlackScorp\GuestBook\Fake\ViewFactory\FakeEntryViewFactory;
 use BlackScorp\GuestBook\Fake\Request\FakeViewEntriesRequest;
 use BlackScorp\GuestBook\Fake\Response\FakeViewEntriesResponse;
-
 use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
 
 class ListEntriesTest extends PHPUnit_Framework_TestCase
