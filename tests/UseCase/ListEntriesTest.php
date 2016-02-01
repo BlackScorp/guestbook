@@ -46,7 +46,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     {
         $repository = new FakeEntryRepository($entries);
         $factory = new FakeEntryViewFactory();
-        $request = new FakeViewEntriesRequest();
+        $request = new FakeViewEntriesRequest(5);
         $response = new FakeViewEntriesResponse();
         $useCase = new ViewEntriesUseCase($repository, $factory);
         $useCase->process($request, $response);
