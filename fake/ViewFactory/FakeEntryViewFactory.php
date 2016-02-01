@@ -7,7 +7,8 @@ use BlackScorp\GuestBook\Fake\View\FakeEntryView;
 use BlackScorp\GuestBook\View\EntryView;
 use BlackScorp\GuestBook\ViewFactory\EntryViewFactory;
 
-class FakeEntryViewFactory implements EntryViewFactory{
+class FakeEntryViewFactory implements EntryViewFactory
+{
     /**
      * @param EntryEntity $entity
      * @return EntryView

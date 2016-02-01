@@ -24,7 +24,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     public function testCanSeeEntries()
     {
         $entities = [];
-        $entities[] = new EntryEntity('test author','test entry');
+        $entities[] = new EntryEntity('test author', 'test entry');
         $request = new FakeViewEntriesRequest(5);
         $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
@@ -42,7 +42,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     {
         $entities = [];
         for ($i = 0; $i < 10; $i++) {
-            $entities[] = new EntryEntity('test author '.$i, 'test entry '.$i);
+            $entities[] = new EntryEntity('test author ' . $i, 'test entry ' . $i);
         }
         $request = new FakeViewEntriesRequest(5);
         $response = $this->processUseCase($request, $entities);
@@ -56,7 +56,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
         $expectedEntries = [];
 
         for ($i = 0; $i < 10; $i++) {
-            $entryEntity = new EntryEntity('test author '.$i, 'test entry '.$i);
+            $entryEntity = new EntryEntity('test author ' . $i, 'test entry ' . $i);
 
             if ($i >= 5) {
                 $expectedEntries[] = $this->entryViewFactory->create($entryEntity);

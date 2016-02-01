@@ -1,9 +1,11 @@
 <?php
 namespace BlackScorp\GuestBook\ViewFactory;
+
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\View\EntryView;
 
-interface EntryViewFactory {
+interface EntryViewFactory
+{
     /**
      * @param EntryEntity $entity
      * @return EntryView

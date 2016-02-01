@@ -3,7 +3,8 @@
 namespace BlackScorp\GuestBook\Entity;
 
 
-class EntryEntity {
+class EntryEntity
+{
     private $author = '';
     private $text = '';
 

@@ -4,7 +4,8 @@ namespace BlackScorp\GuestBook\Fake\Repository;
 
 use BlackScorp\GuestBook\Repository\EntryRepository;
 
-class FakeEntryRepository implements EntryRepository{
+class FakeEntryRepository implements EntryRepository
+{
     private $entries = [];
 
     public function __construct(array $entries = [])
@@ -15,6 +16,6 @@ class FakeEntryRepository implements EntryRepository{
     public function findAllPaginated($offset, $limit)
     {
 
-        return array_splice($this->entries,$offset,$limit);
+        return array_splice($this->entries, $offset, $limit);
     }
 }

@@ -3,7 +3,8 @@
 namespace BlackScorp\GuestBook\Request;
 
 
-interface ViewEntriesRequest {
+interface ViewEntriesRequest
+{
 
     public function getOffset();
 
