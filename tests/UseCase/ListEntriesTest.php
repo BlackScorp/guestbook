@@ -53,7 +53,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
             $entities[] = $entryEntity;
         }
         $request = new FakeViewEntriesRequest(5);
-
+        $request->setPage(2);
         $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
         $this->assertSame(5, count($response->entries));
