@@ -13,12 +13,7 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     public function testEntriesNotExists()
     {
         $entries = [];
-        $repository = new FakeEntryRepository($entries);
-        $factory = new FakeEntryViewFactory();
-        $request = new FakeViewEntriesRequest();
-        $response = new FakeViewEntriesResponse();
-        $useCase = new ViewEntriesUseCase($repository,$factory);
-        $useCase->process($request, $response);
+        $response = $this->executeUseCase($entries);
         $this->assertEmpty($response->entries);
     }
 
@@ -27,12 +22,22 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
         $entries = [
             new EntryEntity('testAuthor','test text')
         ];
+        $response = $this->executeUseCase($entries);
+        $this->assertNotEmpty($response->entries);
+    }
+
+    /**
+     * @param $entries
+     * @return FakeViewEntriesResponse
+     */
+    private function executeUseCase($entries)
+    {
         $repository = new FakeEntryRepository($entries);
         $factory = new FakeEntryViewFactory();
         $request = new FakeViewEntriesRequest();
         $response = new FakeViewEntriesResponse();
-        $useCase = new ViewEntriesUseCase($repository,$factory);
+        $useCase = new ViewEntriesUseCase($repository, $factory);
         $useCase->process($request, $response);
-        $this->assertNotEmpty($response->entries);
+        return $response;
     }
 }
