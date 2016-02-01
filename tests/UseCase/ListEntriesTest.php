@@ -13,24 +13,36 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
     public function testEntriesNotExists()
     {
         $entries = [];
-        $response = $this->executeUseCase($entries);
+        $response = $this->processUseCase($entries);
         $this->assertEmpty($response->entries);
     }
 
     public function testCanSeeEntries()
     {
         $entries = [
-            new EntryEntity('testAuthor','test text')
+            new EntryEntity('testAuthor', 'test text')
         ];
-        $response = $this->executeUseCase($entries);
+        $response = $this->processUseCase($entries);
         $this->assertNotEmpty($response->entries);
+    }
+
+    public function testCanSeeFiveEntries()
+    {
+        $entities = [];
+        for ($i = 0; $i < 10; $i++) {
+            $entities[] = new EntryEntity('Author '.$i,'Text '.$i);
+        }
+
+        $response = $this->processUseCase($entities);
+        $this->assertNotEmpty($response->entries);
+        $this->assertSame(5, count($response->entries));
     }
 
     /**
      * @param $entries
      * @return FakeViewEntriesResponse
      */
-    private function executeUseCase($entries)
+    private function processUseCase($entries)
     {
         $repository = new FakeEntryRepository($entries);
         $factory = new FakeEntryViewFactory();
