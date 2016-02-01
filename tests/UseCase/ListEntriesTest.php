@@ -1,6 +1,10 @@
 <?php
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use BlackScorp\GuestBook\Fake\Request\FakeViewEntriesRequest;
+use BlackScorp\GuestBook\Fake\Response\FakeViewEntriesResponse;
+use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
+
 class ListEntriesTest extends PHPUnit_Framework_TestCase
 {
     public function testEntriesNotExists()
