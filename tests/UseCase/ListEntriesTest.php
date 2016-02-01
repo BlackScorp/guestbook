@@ -15,4 +15,13 @@ class ListEntriesTest extends PHPUnit_Framework_TestCase
         $useCase->process($request, $response);
         $this->assertEmpty($response->entries);
     }
+
+    public function testCanSeeEntries()
+    {
+        $request = new FakeViewEntriesRequest();
+        $response = new FakeViewEntriesResponse();
+        $useCase = new ViewEntriesUseCase();
+        $useCase->process($request, $response);
+        $this->assertNotEmpty($response->entries);
+    }
 }
