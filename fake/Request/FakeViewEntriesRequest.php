@@ -7,12 +7,12 @@ class FakeViewEntriesRequest implements ViewEntriesRequest
 {
     public function getOffset()
     {
-        // TODO: Implement getOffset() method.
+        return 0;
     }
 
     public function getLimit()
     {
-        // TODO: Implement getLimit() method.
+        return 1;
     }
 
 }
