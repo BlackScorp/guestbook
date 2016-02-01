@@ -1,11 +1,33 @@
 <?php
 namespace BlackScorp\GuestBook\UseCase;
 
+use BlackScorp\GuestBook\Repository\EntryRepository;
 use BlackScorp\GuestBook\Request\ViewEntriesRequest;
 use BlackScorp\GuestBook\Response\ViewEntriesResponse;
+use BlackScorp\GuestBook\ViewFactory\EntryViewFactory;
 
 class ViewEntriesUseCase
 {
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
+    /**
+     * @var EntryViewFactory
+     */
+    private $entryViewFactory;
+
+    /**
+     * ViewEntriesUseCase constructor.
+     * @param EntryRepository $entryRepository
+     * @param EntryViewFactory $entryViewFactory
+     */
+    public function __construct(EntryRepository $entryRepository, EntryViewFactory $entryViewFactory)
+    {
+        $this->entryRepository = $entryRepository;
+        $this->entryViewFactory = $entryViewFactory;
+    }
+
 
     public function process(ViewEntriesRequest $request, ViewEntriesResponse $response)
     {
