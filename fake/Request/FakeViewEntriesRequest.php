@@ -1,7 +1,9 @@
 <?php
 namespace BlackScorp\GuestBook\Fake\Request;
 
-class FakeViewEntriesRequest
+use BlackScorp\GuestBook\Request\ViewEntriesRequest;
+
+class FakeViewEntriesRequest implements ViewEntriesRequest
 {
 
 }

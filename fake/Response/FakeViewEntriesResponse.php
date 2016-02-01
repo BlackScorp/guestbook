@@ -1,7 +1,9 @@
 <?php
 namespace BlackScorp\GuestBook\Fake\Response;
 
-class FakeViewEntriesResponse
+use BlackScorp\GuestBook\Response\ViewEntriesResponse;
+
+class FakeViewEntriesResponse implements ViewEntriesResponse
 {
     public $entries = [];
 }
