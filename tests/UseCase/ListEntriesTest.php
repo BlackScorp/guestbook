@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/../../vendor/autoload.php';
 
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\Fake\Repository\FakeEntryRepository;

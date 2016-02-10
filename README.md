@@ -14,5 +14,5 @@ php composer.phar install
 
 ## run tests
 ~~~
-php tools/phpunit tests
+php tools/phpunit
 ~~~
