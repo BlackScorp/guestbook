@@ -1,0 +1,4 @@
+vendor/
+.idea/
+tools/
+composer.phar
