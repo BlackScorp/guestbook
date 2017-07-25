@@ -7,7 +7,7 @@ use BlackScorp\GuestBook\Fake\Response\FakeViewEntriesResponse;
 use BlackScorp\GuestBook\Fake\ViewFactory\FakeEntryViewFactory;
 use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
 
-class ListEntriesTest extends PHPUnit_Framework_TestCase
+class ListEntriesTest extends \PHPUnit\Framework\TestCase
 {
     public function testEntriesNotExists()
     {
