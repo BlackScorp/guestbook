@@ -9,7 +9,6 @@ class FakeAddEntryMessageStream implements AddEntryMessageStream
 {
     public $text = '';
     public $author = '';
-    public $errors = [];
     public $visibleAuthorIsEmptyMessage = false;
 
     /**
@@ -22,4 +21,21 @@ class FakeAddEntryMessageStream implements AddEntryMessageStream
         $this->author = $author;
         $this->text = $text;
     }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
 }

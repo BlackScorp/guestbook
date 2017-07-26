@@ -1,5 +1,5 @@
 <?php
-namespace BlackScorp\GuestBook\ViewFactory;
+namespace BlackScorp\GuestBook\Factory;
 
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\View\EntryView;

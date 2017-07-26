@@ -1,30 +1,50 @@
 <?php
-
-
 namespace BlackScorp\GuestBook\UseCase;
 
 
-use BlackScorp\GuestBook\Validator\AddEntryValidator;
+use BlackScorp\GuestBook\Fake\Factory\EntryEntityFactory;
 use BlackScorp\GuestBook\MessageStream\AddEntryMessageStream;
+use BlackScorp\GuestBook\Repository\EntryRepository;
+use BlackScorp\GuestBook\Validator\AddEntryValidator;
 
 final class AddEntryUseCase
 {
     /**
      * @var AddEntryValidator
      */
-    private $validator = null;
+    private $addEntryValidator;
+    /**
+     * @var EntryEntityFactory
+     */
+    private $entryEntityFactory;
+    /**
+     * @var EntryRepository
+     */
+    private $entryRepository;
 
     /**
      * AddEntryUseCase constructor.
-     * @param AddEntryValidator $validator
+     * @param AddEntryValidator $addEntryValidator
+     * @param EntryEntityFactory $entryEntityFactory
+     * @param EntryRepository $entryRepository
      */
-    public function __construct(AddEntryValidator $validator)
+    public function __construct(AddEntryValidator $addEntryValidator, EntryEntityFactory $entryEntityFactory, EntryRepository $entryRepository)
     {
-        $this->validator = $validator;
+        $this->addEntryValidator = $addEntryValidator;
+        $this->entryEntityFactory = $entryEntityFactory;
+        $this->entryRepository = $entryRepository;
     }
 
 
     public function process(AddEntryMessageStream $messageStream)
     {
+        $this->addEntryValidator->setMessageStream($messageStream);
+
+        if (!$this->addEntryValidator->isValid()) {
+            return;
+        }
+        $entry = $this->entryEntityFactory->create($messageStream->getAuthor(),$messageStream->getText());
+
+        $this->entryRepository->add($entry);
     }
 }

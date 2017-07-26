@@ -1,10 +1,10 @@
 <?php
-namespace BlackScorp\GuestBook\Fake\ViewFactory;
+namespace BlackScorp\GuestBook\Fake\Factory;
 
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\Fake\View\FakeEntryView;
 use BlackScorp\GuestBook\View\EntryView;
-use BlackScorp\GuestBook\ViewFactory\EntryViewFactory;
+use BlackScorp\GuestBook\Factory\EntryViewFactory;
 
 class FakeEntryViewFactory implements EntryViewFactory
 {

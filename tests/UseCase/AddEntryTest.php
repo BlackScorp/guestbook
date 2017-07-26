@@ -8,23 +8,22 @@ class AddEntryTest extends \PHPUnit\Framework\TestCase
     public function testEntrySaved()
     {
         $messageStream = new FakeAddEntryMessageStream('Test Author', 'Test entry text');
-        $validator = new FakeAddEntryValidator();
-        $useCase = new AddEntryUseCase($validator);
+        $useCase = new AddEntryUseCase();
         $useCase->process($messageStream);
 
         $this->assertNotEmpty($messageStream->author);
         $this->assertNotEmpty($messageStream->text);
-        $this->assertEmpty($messageStream->errors);
+
     }
 
     public function testAuthorIsEmptyMessage()
     {
         $messageStream = new FakeAddEntryMessageStream('', 'Test entry text');
-        $validator = new FakeAddEntryValidator();
-        $useCase = new AddEntryUseCase($validator);
+
+        $useCase = new AddEntryUseCase();
         $useCase->process($messageStream);
 
         $this->assertTrue($messageStream->visibleAuthorIsEmptyMessage);
-        $this->assertNotEmpty($messageStream->errors);
+
     }
 }
