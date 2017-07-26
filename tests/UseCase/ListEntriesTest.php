@@ -3,9 +3,7 @@
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\Fake\Repository\FakeEntryRepository;
 use BlackScorp\GuestBook\Fake\MessageStream\FakeViewEntriesMessageStream;
-use BlackScorp\GuestBook\Fake\Response\FakeViewEntriesResponse;
 use BlackScorp\GuestBook\Fake\ViewFactory\FakeEntryViewFactory;
-use BlackScorp\GuestBook\MessageStream\ViewEntriesMessageStream;
 use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
 
 class ListEntriesTest extends \PHPUnit\Framework\TestCase
