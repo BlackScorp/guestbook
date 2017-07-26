@@ -10,6 +10,7 @@ class FakeAddEntryMessageStream implements AddEntryMessageStream
     public $text = '';
     public $author = '';
     public $errors = [];
+    public $visibleAuthorIsEmptyMessage = false;
 
     /**
      * FakeAddEntryMessageStream constructor.

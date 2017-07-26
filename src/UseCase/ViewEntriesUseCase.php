@@ -5,7 +5,7 @@ use BlackScorp\GuestBook\MessageStream\ViewEntriesMessageStream;
 use BlackScorp\GuestBook\Repository\EntryRepository;
 use BlackScorp\GuestBook\ViewFactory\EntryViewFactory;
 
-class ViewEntriesUseCase
+final class ViewEntriesUseCase
 {
     /**
      * @var EntryRepository
