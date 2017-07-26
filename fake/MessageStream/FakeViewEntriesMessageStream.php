@@ -1,12 +1,15 @@
 <?php
-namespace BlackScorp\GuestBook\Fake\Request;
+namespace BlackScorp\GuestBook\Fake\MessageStream;
 
-use BlackScorp\GuestBook\Request\ViewEntriesRequest;
+use BlackScorp\GuestBook\MessageStream\ViewEntriesMessageStream;
+use BlackScorp\GuestBook\View\EntryView;
 
-class FakeViewEntriesRequest implements ViewEntriesRequest
+
+class FakeViewEntriesMessageStream implements ViewEntriesMessageStream
 {
     private $offset = 0;
     private $limit = 0;
+    public $entries = [];
 
     /**
      * FakeViewEntriesRequest constructor.
@@ -31,4 +34,11 @@ class FakeViewEntriesRequest implements ViewEntriesRequest
     {
         return $this->limit;
     }
+
+
+    public function addEntry(EntryView $entryView)
+    {
+        $this->entries[] = $entryView;
+    }
+
 }

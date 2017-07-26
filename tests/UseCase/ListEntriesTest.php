@@ -2,9 +2,10 @@
 
 use BlackScorp\GuestBook\Entity\EntryEntity;
 use BlackScorp\GuestBook\Fake\Repository\FakeEntryRepository;
-use BlackScorp\GuestBook\Fake\Request\FakeViewEntriesRequest;
+use BlackScorp\GuestBook\Fake\MessageStream\FakeViewEntriesMessageStream;
 use BlackScorp\GuestBook\Fake\Response\FakeViewEntriesResponse;
 use BlackScorp\GuestBook\Fake\ViewFactory\FakeEntryViewFactory;
+use BlackScorp\GuestBook\MessageStream\ViewEntriesMessageStream;
 use BlackScorp\GuestBook\UseCase\ViewEntriesUseCase;
 
 class ListEntriesTest extends \PHPUnit\Framework\TestCase
@@ -12,7 +13,7 @@ class ListEntriesTest extends \PHPUnit\Framework\TestCase
     public function testEntriesNotExists()
     {
         $entries = [];
-        $request = new FakeViewEntriesRequest(5);
+        $request = new FakeViewEntriesMessageStream(5);
         $response = $this->processUseCase($request, $entries);
         $this->assertEmpty($response->entries);
     }
@@ -22,7 +23,7 @@ class ListEntriesTest extends \PHPUnit\Framework\TestCase
         $entries = [
             new EntryEntity('testAuthor', 'test text')
         ];
-        $request = new FakeViewEntriesRequest(5);
+        $request = new FakeViewEntriesMessageStream(5);
         $response = $this->processUseCase($request, $entries);
         $this->assertNotEmpty($response->entries);
     }
@@ -33,7 +34,7 @@ class ListEntriesTest extends \PHPUnit\Framework\TestCase
         for ($i = 0; $i < 10; $i++) {
             $entities[] = new EntryEntity('Author ' . $i, 'Text ' . $i);
         }
-        $request = new FakeViewEntriesRequest(5);
+        $request = new FakeViewEntriesMessageStream(5);
         $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
         $this->assertSame(5, count($response->entries));
@@ -51,7 +52,7 @@ class ListEntriesTest extends \PHPUnit\Framework\TestCase
             }
             $entities[] = $entryEntity;
         }
-        $request = new FakeViewEntriesRequest(5);
+        $request = new FakeViewEntriesMessageStream(5);
         $request->setPage(2);
         $response = $this->processUseCase($request, $entities);
         $this->assertNotEmpty($response->entries);
@@ -60,17 +61,17 @@ class ListEntriesTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param $request
+     * @param $messageStream
      * @param $entries
-     * @return FakeViewEntriesResponse
+     * @return FakeViewEntriesMessageStream
      */
-    private function processUseCase($request, $entries)
+    private function processUseCase($messageStream, $entries)
     {
         $repository = new FakeEntryRepository($entries);
         $factory = new FakeEntryViewFactory();
-        $response = new FakeViewEntriesResponse();
+
         $useCase = new ViewEntriesUseCase($repository, $factory);
-        $useCase->process($request, $response);
-        return $response;
+        $useCase->process($messageStream);
+        return $messageStream;
     }
 }

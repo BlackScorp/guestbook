@@ -1,9 +1,8 @@
 <?php
 namespace BlackScorp\GuestBook\UseCase;
 
+use BlackScorp\GuestBook\MessageStream\ViewEntriesMessageStream;
 use BlackScorp\GuestBook\Repository\EntryRepository;
-use BlackScorp\GuestBook\Request\ViewEntriesRequest;
-use BlackScorp\GuestBook\Response\ViewEntriesResponse;
 use BlackScorp\GuestBook\ViewFactory\EntryViewFactory;
 
 class ViewEntriesUseCase
@@ -29,16 +28,16 @@ class ViewEntriesUseCase
     }
 
 
-    public function process(ViewEntriesRequest $request, ViewEntriesResponse $response)
+    public function process(ViewEntriesMessageStream $messageStream)
     {
-        $entries = $this->entryRepository->findAllPaginated($request->getOffset(), $request->getLimit());
+        $entries = $this->entryRepository->findAllPaginated($messageStream->getOffset(), $messageStream->getLimit());
         if (!$entries) {
             return;
         }
 
         foreach ($entries as $entry) {
             $entryView = $this->entryViewFactory->create($entry);
-            $response->addEntry($entryView);
+            $messageStream->addEntry($entryView);
         }
     }
 }
