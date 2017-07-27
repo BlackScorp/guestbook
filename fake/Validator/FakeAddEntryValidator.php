@@ -4,10 +4,14 @@
 namespace BlackScorp\GuestBook\Fake\Validator;
 
 
+use BlackScorp\GuestBook\Validator\AddEntryValidator;
 
-
-class FakeAddEntryValidator
+class FakeAddEntryValidator extends AddEntryValidator
 {
+    protected function validate()
+    {
+        return false;
+    }
 
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace BlackScorp\GuestBook\Fake\Factory;
+namespace BlackScorp\GuestBook\Factory;
 
 
 use BlackScorp\GuestBook\Entity\EntryEntity;

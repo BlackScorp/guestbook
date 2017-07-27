@@ -2,7 +2,7 @@
 namespace BlackScorp\GuestBook\UseCase;
 
 
-use BlackScorp\GuestBook\Fake\Factory\EntryEntityFactory;
+use BlackScorp\GuestBook\Factory\EntryEntityFactory;
 use BlackScorp\GuestBook\MessageStream\AddEntryMessageStream;
 use BlackScorp\GuestBook\Repository\EntryRepository;
 use BlackScorp\GuestBook\Validator\AddEntryValidator;
@@ -44,7 +44,9 @@ final class AddEntryUseCase
             return;
         }
         $entry = $this->entryEntityFactory->create($messageStream->getAuthor(),$messageStream->getText());
-
+        if(!$entry){
+            return;
+        }
         $this->entryRepository->add($entry);
     }
 }
